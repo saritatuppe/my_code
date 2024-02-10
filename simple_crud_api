@@ -1,0 +1,133 @@
+#from django.shortcuts import render
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from django.db import connection
+from apps.utils import *
+# from models import *
+# from serializers import *
+from apps.utils import dictfetchall
+from django.http import HttpResponse
+import random
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from django.db import connection
+
+class Usertypepermissions(APIView):
+    def get(self, request, recno = None):
+        success = False
+        try:
+            if recno: 
+                get = "SELECT * FROM usertypepermissions WHERE recno = %s"
+                with connection.cursor() as c:
+                    c.execute(get, [recno])
+                    row = dictfetchall(c)
+                success = True
+            else:
+                get = "SELECT * FROM usertypepermissions"
+                with connection.cursor() as c:
+                    c.execute(get)
+                    row = dictfetchall(c)
+                success = True
+
+            return Response({'Success' : success, 'Message' : row}, status=200)
+        
+        except Exception as err:
+            import os
+            import sys
+            exc_type, exc_obj, exc_tb = sys.exc_info()
+            fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
+            print(exc_type, fname, exc_tb.tb_lineno)
+            return Response({'Success' : success, 'Error' : str(err)}, status=400)
+
+
+    def post(self, request):
+
+        success = False
+        try:
+            request_data = request.data
+            usertype_recno = request_data['usertype_recno']
+            function_recno=request_data['function_recno']
+
+            
+            if usertype_recno != None:
+                add = "INSERT INTO usertypepermissions(usertype_recno, function_recno)VALUES (%s, %s)"
+
+                with connection.cursor() as c:
+                    c.execute(add, [usertype_recno, function_recno])
+                
+                get = "SELECT * FROM usertypepermissions ORDER BY recno DESC LIMIT 1"
+                with connection.cursor() as c:
+                    c.execute(get)
+                    row = dictfetchall(c)
+
+                success = True
+
+                return Response({'Success': success, 'Message': row}, status=200)
+            
+            else:
+
+                return Response({'Success': success, 'Error': 'errors'}, status=400)
+                    
+        except Exception as err:
+            import os
+            import sys
+            exc_type, exc_obj, exc_tb = sys.exc_info()
+            fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
+            print(exc_type, fname, exc_tb.tb_lineno)
+            return Response({'Success' : success, 'Error' : str(err)}, status=400)
+
+
+    def patch(self, request):
+
+            success=False
+            try:
+                request_data = request.data
+                recno= request_data.get('recno',None)
+                usertype_recno = request_data.get('usertype_recno',None)
+                function_recno = request_data.get('function_recno',None)
+                isread = request_data.get('isread',1)
+                isedit = request_data.get('isedit',1)
+                isadd = request_data.get('isadd',1)
+                isdelete = request_data.get('isdelete',1)
+                
+
+                update = 'UPDATE usertypepermissions SET usertype-recno= %s, function_recno=%s, isread=%s, isedit=%s, isadd=%s, isdelete=%s WHERE recno = %s'
+                with connection.cursor() as c:
+                    c.execute(update, [usertype_recno, function_recno, isread, isedit, isadd, isdelete, recno])
+                
+
+                return Response({'Success': True, 'Message': 'Updated Successfully'}, status= 200)
+            
+            except Exception as err:
+                import os
+                import sys
+
+                exc_type, exc_obj, exc_tb = sys.exc_info()
+                fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
+                print(exc_type, fname, exc_tb.tb_lineno)
+                return Response({'Success' : False, 'Error' : str(err)}, status=400)
+            
+    
+    def delete(self, request):
+
+            # success = False
+
+            try:
+                request_data = request.data
+                recno = request_data['recno']
+
+                delete = 'UPDATE usertypepermissions SET active = False WHERE recno = %s'
+
+                with connection.cursor() as c:
+                    c.execute(delete, [recno])
+                
+                success = True
+                return Response({'Success': success, 'Message': 'Deleted Successfully'}, status=200)
+            
+            except Exception as err:
+                import os
+                import sys
+                exc_type, exc_obj, exc_tb = sys.exc_info()
+                fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
+                print(exc_type, fname, exc_tb.tb_lineno)
+                return Response({'Success' : False, 'Error' : str(err)}, status=400)
