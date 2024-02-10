@@ -9,8 +9,10 @@ from apps.utils import dictfetchall
 from django.http import HttpResponse
 import random
 from apps.utils import sendEmail
-# Create your views here.
-#from django.contrib.auth.hashers import check_password
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from django.db import connection
+
 
 class Register(APIView):
     def get(self, request, recno = None):
@@ -228,6 +230,7 @@ class Setpassword(APIView):
             print(exc_type, fname, exc_tb.tb_lineno)
             return Response({'Success' : success, 'Error' : str(err)}, status=400)
 
+
 class Forgotpassword(APIView):
     def post(self, request):
         
@@ -282,18 +285,19 @@ class Verifyotp(APIView):
             emailid = request_data['emailid']
             otp = request_data['otp']
 
-            query= f"""SELECT * FROM entity WHERE emailid=%s"""
+            query = f"""SELECT * FROM entity WHERE emailid=%s"""
             with connection.cursor() as c:
                 c.execute(query, [emailid])
-                row=dictfetchall(c)
+                row = dictfetchall(c)
 
-            if len(row)>0:
+            if len(row) > 0:
                 expected_otp = row[0]['otp']
-
                 if otp != expected_otp:
-                    return Response({"Success": False, "Message": "otp does not match"})            
+                    return Response({"Success": False, "Message": "otp does not match"})
+                else:
+                    return Response({"Success": True, "Message": "otp verified successfully "})
             else:
-                return Response({"Success": True, "Message": "otp verified successfully "})
+                return Response({"Success": False, "Message": "Email ID not found"})
 
         except Exception as err:
             import os
@@ -301,6 +305,6 @@ class Verifyotp(APIView):
             exc_type, exc_obj, exc_tb = sys.exc_info()
             fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
             print(exc_type, fname, exc_tb.tb_lineno)
-            return Response({'Success' : success, 'Error' : str(err)}, status=400)
-            
+            return Response({'Success': success, 'Error': str(err)}, status=400)
+
 
