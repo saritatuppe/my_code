@@ -1,0 +1,123 @@
+from tkinter import *
+
+# Create the main window
+root = Tk()
+root.title("Calculator")
+root.configure(bg="#1c1c1c")  # Dark background for realistic effect
+root.geometry("375x475")
+
+# Entry field styling
+e = Entry(root, width=16, font=("Helvetica", 24, "bold"), justify="right", borderwidth=0, bg="#2b2b2b", fg="#f5f5f5")
+e.grid(row=0, column=0, columnspan=4, pady=20, padx=10, ipady=15)
+
+# Calculator functions
+def button_click(number):
+    current = e.get()
+    e.delete(0, END)
+    e.insert(0, str(current) + str(number))
+
+def button_clear():
+    e.delete(0, END)
+
+def button_add():
+    first_num = e.get()
+    global f_num
+    global math
+    math = "addition"
+    f_num = float(first_num)
+    e.delete(0, END)
+
+def button_equal():
+    second_num = e.get()
+    e.delete(0, END)
+    if math == "addition":
+        e.insert(0, f_num + float(second_num))
+    elif math == "subtraction":
+        e.insert(0, f_num - float(second_num))
+    elif math == "multiplication":
+        e.insert(0, f_num * float(second_num))
+    elif math == "division":
+        e.insert(0, f_num / float(second_num))
+
+def button_subtract():
+    first_num = e.get()
+    global f_num
+    global math
+    math = "subtraction"
+    f_num = float(first_num)
+    e.delete(0, END)
+
+def button_multiply():
+    first_num = e.get()
+    global f_num
+    global math
+    math = "multiplication"
+    f_num = float(first_num)
+    e.delete(0, END)
+
+def button_divide():
+    first_num = e.get()
+    global f_num
+    global math
+    math = "division"
+    f_num = float(first_num)
+    e.delete(0, END)
+
+# Button styles
+button_style = {"padx": 20, "pady": 20, "font": ("Helvetica", 18, "bold"), "borderwidth": 0}
+number_button_color = {"bg": "#4b4b4b", "fg": "#f5f5f5", "activebackground": "#6b6b6b", "activeforeground": "#ffffff"}
+operator_button_color = {"bg": "#ff9500", "fg": "#ffffff", "activebackground": "#ffb84d"}
+special_button_color = {"bg": "#d4d4d2", "fg": "#000000", "activebackground": "#e6e6e4"}
+
+# Create buttons
+button_1 = Button(root, text="1", command=lambda: button_click(1), **button_style, **number_button_color)
+button_2 = Button(root, text="2", command=lambda: button_click(2), **button_style, **number_button_color)
+button_3 = Button(root, text="3", command=lambda: button_click(3), **button_style, **number_button_color)
+
+button_4 = Button(root, text="4", command=lambda: button_click(4), **button_style, **number_button_color)
+button_5 = Button(root, text="5", command=lambda: button_click(5), **button_style, **number_button_color)
+button_6 = Button(root, text="6", command=lambda: button_click(6), **button_style, **number_button_color)
+
+button_7 = Button(root, text="7", command=lambda: button_click(7), **button_style, **number_button_color)
+button_8 = Button(root, text="8", command=lambda: button_click(8), **button_style, **number_button_color)
+button_9 = Button(root, text="9", command=lambda: button_click(9), **button_style, **number_button_color)
+button_0 = Button(root, text="0", command=lambda: button_click(0), **button_style, **number_button_color)
+
+button_add = Button(root, text="+", command=button_add, **button_style, **operator_button_color)
+button_equal = Button(root, text="=", command=button_equal, **button_style, **operator_button_color)
+button_clear = Button(root, text="C", command=button_clear, **button_style, **special_button_color)
+
+button_subtract = Button(root, text="-", command=button_subtract, **button_style, **operator_button_color)
+button_multiply = Button(root, text="×", command=button_multiply, **button_style, **operator_button_color)
+button_divide = Button(root, text="÷", command=button_divide, **button_style, **operator_button_color)
+
+# Arrange buttons in the grid
+button_7.grid(row=1, column=0, sticky="nsew")
+button_8.grid(row=1, column=1, sticky="nsew")
+button_9.grid(row=1, column=2, sticky="nsew")
+button_divide.grid(row=1, column=3, sticky="nsew")
+
+button_4.grid(row=2, column=0, sticky="nsew")
+button_5.grid(row=2, column=1, sticky="nsew")
+button_6.grid(row=2, column=2, sticky="nsew")
+button_multiply.grid(row=2, column=3, sticky="nsew")
+
+button_1.grid(row=3, column=0, sticky="nsew")
+button_2.grid(row=3, column=1, sticky="nsew")
+button_3.grid(row=3, column=2, sticky="nsew")
+button_subtract.grid(row=3, column=3, sticky="nsew")
+
+button_0.grid(row=4, column=0, columnspan=2, sticky="nsew")
+button_clear.grid(row=4, column=2, sticky="nsew")
+button_add.grid(row=4, column=3, sticky="nsew")
+
+button_equal.grid(row=5, column=0, columnspan=4, sticky="nsew")
+
+# Adjust row and column weights for resizing
+for i in range(6):
+    root.rowconfigure(i, weight=1)
+for j in range(4):
+    root.columnconfigure(j, weight=1)
+
+# Run the application
+root.mainloop()
