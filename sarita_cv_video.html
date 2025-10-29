@@ -1,0 +1,712 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sarita Tuppe - Professional Profile</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            overflow: hidden;
+            height: 100vh;
+        }
+
+        .video-container {
+            position: relative;
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .slide {
+            display: none;
+            width: 95%;
+            max-width: 1200px;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 25px 70px rgba(0,0,0,0.3);
+            padding: 50px;
+            animation: slideIn 0.8s ease-out;
+            position: relative;
+            overflow-y: auto;
+            max-height: 90vh;
+        }
+
+        .slide.active {
+            display: block;
+        }
+
+        .slide::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 6px;
+            background: linear-gradient(90deg, #1e3c72, #2a5298);
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .profile-header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding-bottom: 30px;
+            border-bottom: 3px solid #f0f0f0;
+        }
+
+        .profile-name {
+            font-size: 3em;
+            font-weight: bold;
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 15px;
+        }
+
+        .profile-title {
+            font-size: 1.4em;
+            color: #666;
+            margin-bottom: 20px;
+        }
+
+        .contact-info {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+            color: #555;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        h1 {
+            color: #1e3c72;
+            font-size: 2.5em;
+            margin-bottom: 30px;
+            text-align: center;
+            font-weight: 300;
+        }
+
+        h2 {
+            color: #2a5298;
+            font-size: 2em;
+            margin-bottom: 25px;
+            font-weight: 400;
+            border-left: 4px solid #2a5298;
+            padding-left: 20px;
+        }
+
+        .objective-text {
+            font-size: 1.2em;
+            line-height: 1.8;
+            color: #444;
+            text-align: justify;
+            padding: 25px;
+            background: linear-gradient(135deg, #f8f9ff, #e8f0ff);
+            border-radius: 15px;
+            border-left: 5px solid #2a5298;
+        }
+
+        .experience-item, .education-item {
+            background: #f8f9ff;
+            margin: 20px 0;
+            padding: 25px;
+            border-radius: 12px;
+            border-left: 5px solid #1e3c72;
+            position: relative;
+        }
+
+        .job-title {
+            font-size: 1.3em;
+            font-weight: bold;
+            color: #1e3c72;
+            margin-bottom: 8px;
+        }
+
+        .company-info {
+            color: #666;
+            font-style: italic;
+            margin-bottom: 15px;
+        }
+
+        .job-duties {
+            list-style: none;
+            padding: 0;
+        }
+
+        .job-duties li {
+            margin: 8px 0;
+            padding-left: 20px;
+            position: relative;
+            color: #555;
+        }
+
+        .job-duties li:before {
+            content: '▶';
+            position: absolute;
+            left: 0;
+            color: #2a5298;
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin: 30px 0;
+        }
+
+        .skill-category {
+            background: linear-gradient(135deg, #f8f9ff, #e8f0ff);
+            padding: 25px;
+            border-radius: 15px;
+            border-top: 4px solid #1e3c72;
+        }
+
+        .skill-category h3 {
+            color: #1e3c72;
+            margin-bottom: 15px;
+            font-size: 1.2em;
+        }
+
+        .skill-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .skill-tag {
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            color: white;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: 500;
+        }
+
+        .certifications-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .cert-item {
+            background: linear-gradient(135deg, #e8f0ff, #d0e0ff);
+            padding: 15px;
+            border-radius: 10px;
+            border-left: 4px solid #2a5298;
+            font-weight: 500;
+            color: #333;
+        }
+
+        .publications-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .publication-item {
+            background: #f0f8ff;
+            margin: 15px 0;
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 5px solid #1e3c72;
+            color: #333;
+            font-style: italic;
+        }
+
+        .languages-container {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin: 30px 0;
+        }
+
+        .language-item {
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            color: white;
+            padding: 15px 25px;
+            border-radius: 25px;
+            font-weight: bold;
+            font-size: 1.1em;
+        }
+
+        .controls {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 15px;
+            z-index: 1000;
+        }
+
+        .control-btn {
+            background: rgba(255, 255, 255, 0.95);
+            border: none;
+            padding: 12px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            color: #1e3c72;
+        }
+
+        .control-btn:hover {
+            background: white;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+        }
+
+        .progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 5px;
+            background: linear-gradient(90deg, #1e3c72, #2a5298);
+            transition: width 0.3s ease;
+            z-index: 1000;
+        }
+
+        .slide-counter {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 12px 18px;
+            border-radius: 25px;
+            font-weight: bold;
+            color: #1e3c72;
+            backdrop-filter: blur(10px);
+        }
+
+        .voice-indicator {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            width: 55px;
+            height: 55px;
+            background: rgba(30, 60, 114, 0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #1e3c72;
+            font-size: 22px;
+            backdrop-filter: blur(10px);
+        }
+
+        .voice-indicator.speaking {
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); opacity: 0.7; }
+            50% { transform: scale(1.15); opacity: 1; }
+            100% { transform: scale(1); opacity: 0.7; }
+        }
+
+        .highlight-section {
+            background: linear-gradient(135deg, #fff3cd, #ffeaa7);
+            padding: 20px;
+            border-radius: 12px;
+            margin: 20px 0;
+            border-left: 5px solid #d4ad2a;
+        }
+
+        @media (max-width: 768px) {
+            .slide {
+                padding: 30px;
+                width: 98%;
+            }
+            
+            .profile-name {
+                font-size: 2.2em;
+            }
+            
+            .contact-info {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .skills-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="video-container">
+        <div class="progress-bar" id="progressBar"></div>
+        <div class="slide-counter" id="slideCounter">1 / 7</div>
+        <div class="voice-indicator" id="voiceIndicator">🎤</div>
+
+        <!-- Slide 1: Profile Header -->
+        <div class="slide active" id="slide1">
+            <div class="profile-header">
+                <div class="profile-name">SARITA TUPPE</div>
+                <div class="profile-title">Assistant Professor | Python Developer | Web Developer</div>
+                <div class="contact-info">
+                    <div class="contact-item">📧 saritatuppe@gmail.com</div>
+                    <div class="contact-item">📱 +91-7498471643</div>
+                    <div class="contact-item">📍 Pune, Maharashtra, India</div>
+                    <div class="contact-item">💻 GitHub: saritatuppe</div>
+                </div>
+            </div>
+            <div class="highlight-section">
+                <h2>Welcome to My Professional Journey</h2>
+                <p style="font-size: 1.2em; color: #555; text-align: center;">
+                    Passionate Computer Science Professional combining Academic Excellence with Industry Experience
+                </p>
+            </div>
+        </div>
+
+        <!-- Slide 2: Career Objective -->
+        <div class="slide" id="slide2">
+            <h1>Career Objective</h1>
+            <div class="objective-text">
+                Passionate and result-driven Computer Science professional with hands-on teaching and development experience. With a strong foundation in web development, Python programming, and data science, I am committed to fostering an engaging and practical learning environment. Seeking to contribute to academic excellence and student growth by blending theory with real-world application.
+            </div>
+        </div>
+
+        <!-- Slide 3: Professional Experience -->
+        <div class="slide" id="slide3">
+            <h1>Professional Experience</h1>
+            
+            <div class="experience-item">
+                <div class="job-title">Assistant Professor</div>
+                <div class="company-info">Abhinav Education Society's Institute of Management & Research, Pune | Jul 2024 – Present</div>
+                <ul class="job-duties">
+                    <li>Teaching Python Programming, Machine Learning, and Power BI</li>
+                    <li>Simplifying complex technical concepts through practical demonstrations</li>
+                    <li>Integrating real-world applications into academic curriculum</li>
+                    <li>Mentoring students and facilitating hands-on classroom projects</li>
+                </ul>
+            </div>
+
+            <div class="experience-item">
+                <div class="job-title">Software Engineer Intern</div>
+                <div class="company-info">Sutradhar Project Consultancy Pvt Ltd, Pune | Jan 2024 – Jun 2024</div>
+                <ul class="job-duties">
+                    <li>Developed and managed web applications using Django framework</li>
+                    <li>Created REST APIs following OOP principles and design patterns</li>
+                    <li>Collaborated with cross-functional teams implementing HTML, CSS, JS frontend solutions</li>
+                    <li>Wrote maintainable code and resolved application defects efficiently</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Slide 4: Education & Certifications -->
+        <div class="slide" id="slide4">
+            <h1>Education & Certifications</h1>
+            
+            <h2>Education</h2>
+            <div class="education-item">
+                <div class="job-title">Master of Computer Science (MCS)</div>
+                <div class="company-info">Savitribai Phule Pune University | 2022 – 2024</div>
+            </div>
+            
+            <div class="education-item">
+                <div class="job-title">Bachelor of Computer Science (BCS)</div>
+                <div class="company-info">Dr. Babasaheb Ambedkar Marathwada University (BAMU) | 2019 – 2022</div>
+            </div>
+
+            <h2>Certifications</h2>
+            <div class="certifications-list">
+                <div class="cert-item">Introduction to Python</div>
+                <div class="cert-item">Python for Data Science</div>
+                <div class="cert-item">C++ Programming</div>
+                <div class="cert-item">C Programming</div>
+            </div>
+        </div>
+
+        <!-- Slide 5: Technical Skills -->
+        <div class="slide" id="slide5">
+            <h1>Technical Skills</h1>
+            
+            <div class="skills-grid">
+                <div class="skill-category">
+                    <h3>Languages & Web Technologies</h3>
+                    <div class="skill-tags">
+                        <span class="skill-tag">Python</span>
+                        <span class="skill-tag">PHP</span>
+                        <span class="skill-tag">HTML</span>
+                        <span class="skill-tag">CSS</span>
+                        <span class="skill-tag">JavaScript</span>
+                    </div>
+                </div>
+
+                <div class="skill-category">
+                    <h3>Frameworks & Tools</h3>
+                    <div class="skill-tags">
+                        <span class="skill-tag">Django</span>
+                        <span class="skill-tag">Flask</span>
+                        <span class="skill-tag">FastAPI</span>
+                    </div>
+                </div>
+
+                <div class="skill-category">
+                    <h3>Libraries & Data Science</h3>
+                    <div class="skill-tags">
+                        <span class="skill-tag">NumPy</span>
+                        <span class="skill-tag">Pandas</span>
+                        <span class="skill-tag">Matplotlib</span>
+                        <span class="skill-tag">Seaborn</span>
+                        <span class="skill-tag">SciPy</span>
+                    </div>
+                </div>
+
+                <div class="skill-category">
+                    <h3>Databases & Version Control</h3>
+                    <div class="skill-tags">
+                        <span class="skill-tag">MySQL</span>
+                        <span class="skill-tag">MongoDB</span>
+                        <span class="skill-tag">Git</span>
+                        <span class="skill-tag">GitHub</span>
+                        <span class="skill-tag">Jupyter</span>
+                        <span class="skill-tag">Power BI</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 6: Soft Skills & Research -->
+        <div class="slide" id="slide6">
+            <h1>Soft Skills & Research</h1>
+            
+            <div class="skills-grid">
+                <div class="skill-category">
+                    <h3>Soft Skills</h3>
+                    <div class="skill-tags">
+                        <span class="skill-tag">Lesson Planning</span>
+                        <span class="skill-tag">Classroom Management</span>
+                        <span class="skill-tag">Team Collaboration</span>
+                        <span class="skill-tag">Communication</span>
+                        <span class="skill-tag">Presentation</span>
+                        <span class="skill-tag">Student Mentorship</span>
+                        <span class="skill-tag">Problem Solving</span>
+                        <span class="skill-tag">Critical Thinking</span>
+                    </div>
+                </div>
+
+                <div class="skill-category">
+                    <h3>Languages</h3>
+                    <div class="languages-container">
+                        <div class="language-item">English</div>
+                        <div class="language-item">Marathi</div>
+                        <div class="language-item">Hindi</div>
+                    </div>
+                </div>
+            </div>
+
+            <h2>Research Publications</h2>
+            <ul class="publications-list">
+                <li class="publication-item">AI for Cyber Threat Intelligence & Risk Assessment</li>
+                <li class="publication-item">Human-Robot Collaboration in Smart Workspaces: Current Practices, Challenges, and Future Directions</li>
+            </ul>
+        </div>
+
+        <!-- Slide 7: Professional Summary -->
+        <div class="slide" id="slide7">
+            <h1>Professional Summary</h1>
+            <div class="highlight-section">
+                <h2>Why Choose Sarita Tuppe?</h2>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; margin: 30px 0;">
+                    <div class="experience-item">
+                        <div class="job-title">🎓 Academic Excellence</div>
+                        <p>Current Assistant Professor with proven teaching abilities in Python, ML, and Power BI</p>
+                    </div>
+                    <div class="experience-item">
+                        <div class="job-title">💻 Industry Experience</div>
+                        <p>Hands-on software development experience with Django, REST APIs, and modern web technologies</p>
+                    </div>
+                    <div class="experience-item">
+                        <div class="job-title">🔬 Research Focused</div>
+                        <p>Published researcher in AI, cybersecurity, and human-robot collaboration</p>
+                    </div>
+                    <div class="experience-item">
+                        <div class="job-title">🌟 Well-Rounded</div>
+                        <p>Perfect blend of technical expertise, teaching skills, and research capabilities</p>
+                    </div>
+                </div>
+            </div>
+            <div style="text-align: center; margin-top: 40px;">
+                <p style="font-size: 1.3em; color: #1e3c72; font-weight: bold;">Ready to contribute to your organization's success!</p>
+                <p style="color: #666; margin-top: 15px;">Contact: saritatuppe@gmail.com | +91-7498471643</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="controls">
+        <button class="control-btn" id="prevBtn">Previous</button>
+        <button class="control-btn" id="playBtn">Play</button>
+        <button class="control-btn" id="nextBtn">Next</button>
+    </div>
+
+    <script>
+        let currentSlide = 1;
+        const totalSlides = 7;
+        let isPlaying = false;
+        let slideInterval;
+
+        const slides = document.querySelectorAll('.slide');
+        const progressBar = document.getElementById('progressBar');
+        const slideCounter = document.getElementById('slideCounter');
+        const playBtn = document.getElementById('playBtn');
+        const voiceIndicator = document.getElementById('voiceIndicator');
+
+        const slideTexts = [
+            "Welcome! I am Sarita Tuppe, an Assistant Professor, Python Developer, and Web Developer based in Pune, Maharashtra. I combine academic excellence with industry experience to deliver exceptional results in both teaching and software development. You can reach me at saritatuppe@gmail.com or connect with me on GitHub at saritatuppe.",
+            
+            "Let me share my career objective with you. I am a passionate and result-driven Computer Science professional with hands-on teaching and development experience. With a strong foundation in web development, Python programming, and data science, I am committed to fostering an engaging and practical learning environment. I seek to contribute to academic excellence and student growth by blending theory with real-world applications.",
+            
+            "Here's my professional experience. Currently, I serve as an Assistant Professor at Abhinav Education Society's Institute of Management and Research in Pune since July 2024. I teach Python Programming, Machine Learning, and Power BI, while simplifying complex technical concepts through practical demonstrations. I also integrate real-world applications into the academic curriculum and mentor students through hands-on classroom projects. Previously, I worked as a Software Engineer Intern at Sutradhar Project Consultancy, where I developed web applications using Django, created REST APIs, and collaborated with cross-functional teams on frontend solutions.",
+            
+            "Let me outline my educational background and certifications. I hold a Master of Computer Science degree from Savitribai Phule Pune University, completed in 2024, and a Bachelor of Computer Science from Dr. Babasaheb Ambedkar Marathwada University, completed in 2022. My certifications include Introduction to Python, Python for Data Science, C++ Programming, and C Programming, which demonstrate my commitment to continuous learning and skill development.",
+            
+            "Here are my technical skills. In languages and web technologies, I'm proficient in Python, PHP, HTML, CSS, and JavaScript. For frameworks and tools, I work with Django, Flask, and FastAPI. My data science expertise includes NumPy, Pandas, Matplotlib, Seaborn, and SciPy libraries. I'm also experienced with databases like MySQL and MongoDB, and version control systems including Git and GitHub. Additionally, I work with Jupyter notebooks and Power BI for data analysis and visualization.",
+            
+            "Now let me discuss my soft skills and research contributions. My soft skills include lesson planning, classroom management, team collaboration, effective communication, presentation abilities, student mentorship, problem-solving, and critical thinking. I'm multilingual, speaking English, Marathi, and Hindi fluently. In research, I have published papers on AI for Cyber Threat Intelligence and Risk Assessment, and Human-Robot Collaboration in Smart Workspaces, covering current practices, challenges, and future directions.",
+            
+            "In summary, why should you choose Sarita Tuppe? I offer academic excellence as a current Assistant Professor with proven teaching abilities in Python, Machine Learning, and Power BI. I bring industry experience through hands-on software development with Django, REST APIs, and modern web technologies. I'm research-focused, with published work in AI, cybersecurity, and human-robot collaboration. Most importantly, I provide a well-rounded profile that perfectly blends technical expertise, teaching skills, and research capabilities. I'm ready to contribute to your organization's success. Thank you for your consideration!"
+        ];
+
+        function updateSlide() {
+            slides.forEach(slide => slide.classList.remove('active'));
+            document.getElementById(`slide${currentSlide}`).classList.add('active');
+            
+            const progress = (currentSlide / totalSlides) * 100;
+            progressBar.style.width = progress + '%';
+            slideCounter.textContent = `${currentSlide} / ${totalSlides}`;
+        }
+
+        function nextSlide() {
+            if (currentSlide < totalSlides) {
+                currentSlide++;
+                updateSlide();
+            } else if (isPlaying) {
+                stopPresentation();
+            }
+        }
+
+        function prevSlide() {
+            if (currentSlide > 1) {
+                currentSlide--;
+                updateSlide();
+            }
+        }
+
+        function speakText(text) {
+            if ('speechSynthesis' in window) {
+                const utterance = new SpeechSynthesisUtterance(text);
+                utterance.rate = 0.85;
+                utterance.pitch = 1;
+                utterance.volume = 0.8;
+                
+                utterance.onstart = () => {
+                    voiceIndicator.classList.add('speaking');
+                };
+                
+                utterance.onend = () => {
+                    voiceIndicator.classList.remove('speaking');
+                    if (isPlaying) {
+                        setTimeout(nextSlide, 1500);
+                    }
+                };
+                
+                speechSynthesis.speak(utterance);
+            } else {
+                if (isPlaying) {
+                    setTimeout(nextSlide, 5000);
+                }
+            }
+        }
+
+        function startPresentation() {
+            isPlaying = true;
+            playBtn.textContent = 'Pause';
+            speakText(slideTexts[currentSlide - 1]);
+        }
+
+        function stopPresentation() {
+            isPlaying = false;
+            playBtn.textContent = 'Play';
+            speechSynthesis.cancel();
+            voiceIndicator.classList.remove('speaking');
+            if (slideInterval) {
+                clearInterval(slideInterval);
+            }
+        }
+
+        // Event listeners
+        document.getElementById('nextBtn').addEventListener('click', () => {
+            if (isPlaying) stopPresentation();
+            nextSlide();
+        });
+
+        document.getElementById('prevBtn').addEventListener('click', () => {
+            if (isPlaying) stopPresentation();
+            prevSlide();
+        });
+
+        playBtn.addEventListener('click', () => {
+            if (isPlaying) {
+                stopPresentation();
+            } else {
+                startPresentation();
+            }
+        });
+
+        // Keyboard controls
+        document.addEventListener('keydown', (e) => {
+            switch(e.key) {
+                case 'ArrowLeft':
+                    if (isPlaying) stopPresentation();
+                    prevSlide();
+                    break;
+                case 'ArrowRight':
+                case ' ':
+                    if (isPlaying) stopPresentation();
+                    nextSlide();
+                    break;
+                case 'Enter':
+                    if (isPlaying) {
+                        stopPresentation();
+                    } else {
+                        startPresentation();
+                    }
+                    break;
+            }
+        });
+
+        // Auto-start message
+        setTimeout(() => {
+            alert('Welcome to Sarita Tuppe\'s Professional CV Video Presentation!\n\nFeatures:\n• Click PLAY for audio narration\n• Navigate with Previous/Next buttons\n• Use keyboard shortcuts (Enter = play/pause, arrows = navigate)\n• Professional presentation of qualifications and experience\n\nClick OK to begin exploring!');
+        }, 1000);
+    </script>
+</body>
+</html>
